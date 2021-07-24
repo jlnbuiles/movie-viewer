@@ -12,14 +12,8 @@ class MovieListTVC: UITableViewController {
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     
     // MARK: - Properties
-    private let releaseDateFormatter = { () -> DateFormatter in
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
-        return formatter
-    }()
-    
-    var movies:[Movie] = []
+    private var movies:[Movie] = []
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     // MARK: - Initializers
     required init?(coder: NSCoder) {
@@ -30,27 +24,43 @@ class MovieListTVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Your Movies"
-        fetchMovies()
+        fetchMovies(category: .upcoming)
     }
 
-    private func fetchMovies() {
+    // MARK: Movie Requests
+    private func fetchMovies(category: MovieCategory) {
         configureActivityIndicator()
-        MovieDBHTTPClient().GETMovies(for: "thingy") { movies, error in
+        
+        MovieRepository.GETMovies(for: category) { movies, errorString in
             self.activityIndicator.stopAnimating()
             
-            if let moviesFetched = movies, error == nil {
+            if let moviesFetched = movies, errorString == nil {
                 self.movies = moviesFetched
                 self.tableView.reloadData()
             } else {
-                print("Not diplaying any movies, an unexpected error ocurred")
-                // TODO: Mosve to a general alerts utilities class
-                let alertController = UIAlertController(title: "Unexpected Error",
-                                                        message: "We were unable to fetch the movies. Please try again later.",
-                                                        preferredStyle: .alert)
-                
+                print("Not diplaying any movies, an unexpected error ocurred. \(String(describing: errorString))")
+                let alertController = UIAlertController.unableToFetchMovieDataAlert()
                 self.present(alertController, animated: true, completion: nil)
             }
         }
+        
+//        MovieDBHTTPClient().GETMovies(for: category) { movies, error in
+//            self.activityIndicator.stopAnimating()
+//
+//            if let moviesFetched = movies, error == nil {
+//                self.movies = moviesFetched
+//                self.tableView.reloadData()
+//            } else {
+//                print("Not diplaying any movies, an unexpected error ocurred")
+//                let alertController = UIAlertController.unableToFetchMovieDataAlert()
+//                self.present(alertController, animated: true, completion: nil)
+//            }
+//        }
+    }
+    
+    @IBAction func categorySelectorPressed(sender: AnyObject) {
+        let movieCategory = MovieCategory(number: segmentedControl.selectedSegmentIndex)
+        fetchMovies(category: movieCategory)
     }
     
     // MARK: - Custom UI code
@@ -76,9 +86,9 @@ class MovieListTVC: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCellID", for: indexPath)
         
         if let movieCell = cell as? MovieCell {
-            return movieCell.configure(with: movies[indexPath.row],formatter: releaseDateFormatter)
+            return movieCell.configure(with: movies[indexPath.row],
+                                       formatter: Movie.sharedDateFormatter())
         }
-
         return cell
     }
     

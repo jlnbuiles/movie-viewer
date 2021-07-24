@@ -7,10 +7,44 @@
 
 import Foundation
 
-enum MovieType {
-    case other, toprated, popular, upcoming
+/**
+    Represents a movie collection/category as seen on the MoviesDB service.
+ 
+    - Author:  Julian Builes
+ */
+enum MovieCategory: Int {
+    case toprated, popular, upcoming
+    
+    func externalID() -> String {
+        switch self {
+        case .toprated:
+            return "7102182"
+        case .popular:
+            return "7102183"
+        case .upcoming:
+            return "7102184"
+        }
+    }
+    
+    init(number: Int) {
+        switch number {
+        case 0:
+            self = .upcoming
+        case 1:
+            self = .popular
+        case 2:
+            self = .toprated
+        default:
+            self = .toprated
+        }
+    }
 }
 
+/**
+    A movie model.
+ 
+    - Author:  Julian Builes
+ */
 class Movie: BaseModel {
     
     // MARK: - Properties
@@ -29,16 +63,13 @@ class Movie: BaseModel {
         return df
     }() as DateFormatter
     
-    // TODO logic for movie type
-    var type = MovieType.other
-    
     // MARK: - Initializers
     override init() {
         super.init()
     }
     
     static func sharedDateFormatter() -> DateFormatter {
-        return Movie.sharedDF
+        return sharedDF
     }
     
     override init(JSON: [String: Any]) throws {
@@ -69,14 +100,11 @@ class Movie: BaseModel {
     
     private func dateFrom(JSON: [String: Any]) throws -> Date? {
         
-        if let releaseDateStr = (JSON["release_date"] ?? JSON["air_date"]) as? String {
-                
-            if let date = Movie.sharedDF.date(from:releaseDateStr) {
-                return date
-            }
-            print("Unable to get release date for json object \(JSON)")
+        if let releaseDateStr = (JSON["release_date"] ?? JSON["air_date"] ?? JSON["first_air_date"]) as? String,
+            let date = Movie.sharedDF.date(from:releaseDateStr) {
+            return date
         }
+        print("Unable to get release date for json object \(JSON)")
         return nil
     }
 }
-

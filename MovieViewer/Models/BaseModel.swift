@@ -17,7 +17,7 @@ class BaseModel: NSObject {
     // MARK: - Properties
     var externalID: String = ""
     
-    // MARK: - Init
+    // MARK: - Initializers
     override init() { super.init() }
     
     init(JSON:[String: Any]) throws {
@@ -25,7 +25,6 @@ class BaseModel: NSObject {
             print("Unable to obtain object external ID for response data: \(JSON)")
             throw JSONSerializationError.missing("id")
         }
-        
         self.externalID = String(externalID);
     }
 }

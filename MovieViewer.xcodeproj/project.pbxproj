@@ -24,6 +24,8 @@
 		299D924226AA0EC900602AD7 /* BaseModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299D924126AA0EC900602AD7 /* BaseModelTest.swift */; };
 		299D924426AA5EB500602AD7 /* MovieDBHTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299D924326AA5EB500602AD7 /* MovieDBHTTPClientTests.swift */; };
 		299D924926AB434B00602AD7 /* UtilityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299D924826AB434B00602AD7 /* UtilityExtensions.swift */; };
+		29CDC6BA26AC6F91008E7920 /* MovieCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CDC6B926AC6F91008E7920 /* MovieCacheManager.swift */; };
+		29CDC6BF26ACA2BE008E7920 /* MovieRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CDC6BE26ACA2BE008E7920 /* MovieRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,8 @@
 		299D924126AA0EC900602AD7 /* BaseModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModelTest.swift; sourceTree = "<group>"; };
 		299D924326AA5EB500602AD7 /* MovieDBHTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDBHTTPClientTests.swift; sourceTree = "<group>"; };
 		299D924826AB434B00602AD7 /* UtilityExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityExtensions.swift; sourceTree = "<group>"; };
+		29CDC6B926AC6F91008E7920 /* MovieCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCacheManager.swift; sourceTree = "<group>"; };
+		29CDC6BE26ACA2BE008E7920 /* MovieRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +121,7 @@
 		298FD6EA26A76C5B00FF4724 /* MovieViewer */ = {
 			isa = PBXGroup;
 			children = (
+				29CDC6BD26ACA29A008E7920 /* Repositories */,
 				298FD72326A7960500FF4724 /* Networking */,
 				298FD71C26A7702D00FF4724 /* Models */,
 				298FD71B26A76F9300FF4724 /* ViewControllers */,
@@ -172,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				298FD72126A795F500FF4724 /* MovieDBHTTPClient.swift */,
+				29CDC6B926AC6F91008E7920 /* MovieCacheManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -217,6 +223,14 @@
 				298FD6EB26A76C5B00FF4724 /* AppDelegate.swift */,
 			);
 			path = "App Delegate";
+			sourceTree = "<group>";
+		};
+		29CDC6BD26ACA29A008E7920 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				29CDC6BE26ACA2BE008E7920 /* MovieRepository.swift */,
+			);
+			path = Repositories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -352,8 +366,10 @@
 				298FD6F026A76C5B00FF4724 /* MovieListTVC.swift in Sources */,
 				298FD72226A795F500FF4724 /* MovieDBHTTPClient.swift in Sources */,
 				298FD6EC26A76C5B00FF4724 /* AppDelegate.swift in Sources */,
+				29CDC6BF26ACA2BE008E7920 /* MovieRepository.swift in Sources */,
 				298FD71E26A7704500FF4724 /* Movie.swift in Sources */,
 				298FD72026A7824600FF4724 /* MovieCell.swift in Sources */,
+				29CDC6BA26AC6F91008E7920 /* MovieCacheManager.swift in Sources */,
 				299D923B26A904DC00602AD7 /* MovieDetailsVC.swift in Sources */,
 				299D923D26A909BC00602AD7 /* BaseModel.swift in Sources */,
 				299D924926AB434B00602AD7 /* UtilityExtensions.swift in Sources */,

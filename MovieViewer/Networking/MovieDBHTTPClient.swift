@@ -10,14 +10,18 @@ import Foundation
 // popular list: 7102183
 // upcoming list: 7102184
 
-// https://api.themoviedb.org/3/movie/550?api_key=ef8c9b33aa5def87ccab12278f7929eb
 let API_KEY_VALUE = "ef8c9b33aa5def87ccab12278f7929eb"
 let MOVIE_DB_BASE_URL = "https://api.themoviedb.org"
 let API_KEY_URL_PARAM = "api_key"
 let API_KEY_QUERY_COMPONENTS = URLQueryItem(name: API_KEY_URL_PARAM, value: API_KEY_VALUE)
 let MID_IMG_BASE_URL = "https://image.tmdb.org/t/p/w500"
 
-enum MoviesDBURLPath {
+/**
+ A simple yet declarative way to represent the URL paths.
+ 
+ - Author:  Julian Builes
+ */
+private enum MoviesDBURLPath {
 
     case list, details
     
@@ -34,28 +38,35 @@ enum MoviesDBURLPath {
 // MARK: - Type Alias
 typealias MovieQueryResults = ([Movie]?, String?) -> Void
 
+/**
+    Layer that interacts with the movieDB web services.
+ 
+    - Author:  Julian Builes
+ */
 class MovieDBHTTPClient {
     
-    let defaultSession = URLSession(configuration: .default)
+    // MARK: - Properties
+    private let defaultSession = URLSession(configuration: .default)
     
-    // Make dynamic for category
-    func URL(forListIncategory: String) -> URL? {
+    // MARK: - Instance Methods
+    private func URL(category: MovieCategory) -> URL? {
         
         if var urlComponents = URLComponents(string: MOVIE_DB_BASE_URL) {
-            urlComponents.path = MoviesDBURLPath.list.toString(withID: "7102183")
+            let categoryString = category.externalID()
+            urlComponents.path = MoviesDBURLPath.list.toString(withID: categoryString)
             urlComponents.queryItems = [API_KEY_QUERY_COMPONENTS]
             
             if let url = urlComponents.url {
                 return url
             }
         }
-        print("Unable to create URL for category \(forListIncategory)")
+        print("Unable to create URL for category \(category.externalID())")
         return nil
     }
     
-    func GETMovies(for category: String, completion: @escaping MovieQueryResults) {
+    func GETMovies(for category: MovieCategory, completion: @escaping MovieQueryResults) {
         
-        if let url = URL(forListIncategory: "") {
+        if let url = URL(category: category) {
 
             let dataTask = defaultSession.dataTask(with: url) {
                 data, response, error in
@@ -78,7 +89,7 @@ class MovieDBHTTPClient {
         }
     }
     
-    func decode(JSONMoviesData: Data) -> [Movie] {
+    private func decode(JSONMoviesData: Data) -> [Movie] {
         
         do {
             if let responseDict = try JSONSerialization.jsonObject(with: JSONMoviesData,

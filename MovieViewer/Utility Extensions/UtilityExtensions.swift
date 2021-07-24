@@ -37,3 +37,11 @@ extension UIImageView {
         }
     }
 }
+
+extension UIAlertController{
+    class func unableToFetchMovieDataAlert() -> UIAlertController {
+        return UIAlertController(title: "Unexpected Error",
+                                            message: "We were unable to fetch movie data. Please try again later.",
+                                            preferredStyle: .alert)
+    }
+}

@@ -37,17 +37,19 @@ class MovieDetailsVC: UIViewController {
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Movie Detailsspa"
+        title = "Movie Details"
         configureFields(with: movie)
     }
     
     // MARK: - UI Configuration
     private func configureFields(with theMovie: Movie) {
-        popularityLabel.text = String(theMovie.popularity)
+        
+        popularityLabel.text = String(format: "%.2f", theMovie.popularity)
         
         overviewLabel.text = theMovie.overview
         overviewLabel.numberOfLines = 0
         titleLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.text = movie.title
         
         if let releaseDate = theMovie.releaseDate {
             releaseDateLabel.text = Movie.sharedDateFormatter().string(from: releaseDate)

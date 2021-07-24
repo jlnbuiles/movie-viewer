@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Root View Controller-->
+        <!--Movie ListTVC-->
         <scene sceneID="9nl-zp-O46">
             <objects>
                 <tableViewController id="I7B-ic-bai" customClass="MovieListTVC" customModule="MovieViewer" customModuleProvider="target" sceneMemberID="viewController">
@@ -86,7 +86,24 @@
                             <outlet property="delegate" destination="I7B-ic-bai" id="15Y-DQ-S9v"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="30Z-lL-ccy"/>
+                    <navigationItem key="navigationItem" id="30Z-lL-ccy">
+                        <nil key="title"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="Sxd-Xz-ciX">
+                            <rect key="frame" x="83" y="5.5" width="248" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Upcoming"/>
+                                <segment title="Popular"/>
+                                <segment title="Top"/>
+                            </segments>
+                            <connections>
+                                <action selector="categorySelectorPressedWithSender:" destination="I7B-ic-bai" eventType="valueChanged" id="6BC-Dx-I01"/>
+                            </connections>
+                        </segmentedControl>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="segmentedControl" destination="Sxd-Xz-ciX" id="VOD-Vw-uOu"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jnM-dN-nn6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -224,13 +241,13 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="ReleaseDateLabel" destination="3TF-p8-mUh" id="v2X-3D-Df1"/>
-                        <outlet property="ReleaseDateTitleabel" destination="rmY-Gq-9R6" id="3W0-fX-HKM"/>
                         <outlet property="imageView" destination="LOZ-Cs-YY0" id="Ymu-Xy-sCH"/>
                         <outlet property="overviewLabel" destination="2NL-wq-VBm" id="xUC-OA-fwO"/>
                         <outlet property="overviewTitleLabel" destination="6SH-pf-OQg" id="FZm-RX-ID2"/>
                         <outlet property="popularityLabel" destination="Ddk-lf-Jhv" id="EOe-y0-8Y3"/>
                         <outlet property="popularityTitleLabel" destination="Hbg-ZU-5lI" id="cO4-0B-36r"/>
+                        <outlet property="releaseDateLabel" destination="3TF-p8-mUh" id="ZPW-va-STL"/>
+                        <outlet property="releaseDateTitleabel" destination="rmY-Gq-9R6" id="WPU-G1-nY3"/>
                         <outlet property="titleLabel" destination="mD7-HC-YNF" id="cDG-ib-rIG"/>
                     </connections>
                 </viewController>
